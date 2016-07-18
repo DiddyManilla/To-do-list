@@ -1,0 +1,48 @@
+body {
+    background-color: #dddddd;
+}
+*:focus {
+    outline: none;
+}
+h1 {
+
+    text-align: center;
+
+    font-family: Helvetica;
+    color: #444444;
+}
+table {
+    margin-left: 40%;
+    margin-right: 40%;
+    text-align: center;
+    font-size: 40px;
+}
+table input {
+    display: inline;
+    font-size: 20px;
+    border-radius: 15px;
+    background-color: #ffffff;
+}
+input[type=text] {
+    padding: 4px;
+}
+tfoot {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 40px;
+}
+nav h2 {
+    cursor: pointer;
+    display: inline;
+    margin: 0 2% 0 2%;
+}
+nav {
+    position: relative;
+    margin: 0 40% 0 40%;
+    cursor: default;
+    white-space: nowrap;
+}
+.selected {
+	border-bottom: 2px solid #35d3f7;
+}
