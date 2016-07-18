@@ -3,58 +3,57 @@ $(document).ready(function() {
 	this.str = string,
 	this.done = done
     }
-	$("#job").bind("keydown", function(event) {
+	$("#job").on("keydown", function(event) {
 		if (event.which == 13) {
 			$("#add").trigger("click");
 		}
 	});
-    var jobs = [];
+    let jobs = [];
     let num = 0;
+    let currentView = "remaining";
     //functionality for the add button
     $("#add").click(function() {
-		let job = $("#job").val();
-		if (job != "") {
-            $("table").append("<tr><td id=" + num + ">" + job + "</td><td><input type=\"button\" value=\"Remove\" class=\"remove\" /></td></tr>");
+		let jobName = $("#job").val();
+		if (jobName != "") {
+			jobs.push(new Job(jobName, false));
+            		$("tbody").append("<tr id=" + num + "><td>" + jobName + "</td><td><input type=checkbox class=checkbox></td></tr>");
 			num++;
-			$(".remove").click(function() {
-				jobs[Number($(this).siblings()[0].attr("id"))].done = true;
-				$(this).closest("tr").hide();
-            });
+			$("#" + (num - 1) + " .checkbox").click(function() {
+				jobs[Number($(this).closest("tr").attr("id"))].done ^= true;
+            		});
 			$("input[type=text]").val("");
 			$("#job").focus();
 		}
-		jobs.push(new Job(job, false));
+		
     });
-
-    //functionality for the remove buttons
-    $(".remove").click(function() {
-		jobs[Number($(this).siblings()[0].attr("id"))].done = true;
-		$(this).closest("tr").hide();
+    $("#remove").click(function() {
+	for (let i = 0, index = 0; i < jobs.length; index++) {
+	    if (jobs[i].done) {
+		jobs.splice(i, 1);
+		$("#" + index).remove();
+	    } else {
+		i++;
+	    }
+	}
+	let trs = $(" tbody tr");
+	for (let i = 0; i < trs.length; i++) {
+	    $(trs[i]).attr("id", i);
+	}
+	num = trs.length;
     });
-    
     $("nav h2").click(function() {
-		console.log($(this).text());
-		for (var i = 0; i < jobs.length; i++) {
-			$("#" + i + "").closest("tr").hide();
+		for (let i = 0; i < jobs.length; i++) {
+			$("#" + i + "").hide();
 		}
-		let text = $(this).text();
-		for (var i = 0; i < jobs.length; i++) {
-			console.log("iteration #" + i);
-			if (text === "All") {
-				$("#" + i + "").closest("tr").attr("style", "display: block");
-				console.log("text == all");
-			} else if (text === "Remaining" && !(jobs[i].done)) {
-				$("#" + i + "").closest("tr").attr("style", "display: block");
-				console.log("text === Remaining && !(jobs[i].done)");
-			} else if (text === "Finished" && jobs[i].done) {
-				$("#" + i + "").closest("tr").attr("style", "display: block");
-				console.log("text === Finished && jobs[i].done");
-			
+		currentView = $(this).text();
+		for (let i = 0; i < jobs.length; i++) {
+			if (currentView === "All") {
+				$("#" + i + "").show();
+			} else if (currentView === "Remaining" && !(jobs[i].done)) {
+				$("#" + i + "").show();
+			} else if (currentView === "Finished" && jobs[i].done) {
+				$("#" + i + "").show();
 			}
 		}
-		$(".remove").click(function() {
-			jobs[Number($(this).siblings()[0].attr("id"))].done = true;
-			$(this).closest("tr").hide();
-        });
-    });
+    	});
 });
