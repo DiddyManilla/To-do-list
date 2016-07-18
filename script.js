@@ -10,7 +10,8 @@ $(document).ready(function() {
 	});
     let jobs = [];
     let num = 0;
-    let currentView = "remaining";
+    let currentView = "Remaining";
+    $("h2:contains(" + currentView + ")").addClass("selected");
     //functionality for the add button
     $("#add").click(function() {
 		let jobName = $("#job").val();
@@ -45,7 +46,9 @@ $(document).ready(function() {
 		for (let i = 0; i < jobs.length; i++) {
 			$("#" + i + "").hide();
 		}
+		$("h2:contains(" + currentView + ")").removeClass("selected");
 		currentView = $(this).text();
+		$("h2:contains(" + currentView + ")").addClass("selected");
 		for (let i = 0; i < jobs.length; i++) {
 			if (currentView === "All") {
 				$("#" + i + "").show();

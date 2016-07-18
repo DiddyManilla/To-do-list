@@ -43,3 +43,6 @@ nav {
     cursor: default;
     white-space: nowrap;
 }
+.selected {
+	border-bottom: 2px solid #35d3f7;
+}
